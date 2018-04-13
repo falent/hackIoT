@@ -1,0 +1,58 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "opitz baumarkt",
+      "intents": [
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": []
+        },
+        {
+          "name": "FindDepartmentIntent",
+          "samples": [
+            "Wo gibt es {department}"
+          ],
+          "slots": [
+            {
+              "name": "department",
+              "type": "DEPARTMENT_NAMES",
+              "samples": []
+            }
+          ]
+        },
+        {
+          "name": "ContactIntent",
+          "samples": [
+            "sag mir deine Telefonnummer"
+          ],
+          "slots": []
+        }
+      ],
+      "types": [
+        {
+          "name": "DEPARTMENT_NAMES",
+          "values": [
+            {
+              "name": {
+                "value": "smart home"
+              }
+            },
+            {
+              "name": {
+                "value": "security"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

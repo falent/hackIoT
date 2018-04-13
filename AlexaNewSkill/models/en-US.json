@@ -1,0 +1,114 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "myGym",
+      "intents": [
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": []
+        },
+        {
+          "name": "NameIntent",
+          "samples": [
+            "{name}"
+          ],
+          "slots": [
+            {
+              "name": "name",
+              "type": "AMAZON.US_FIRST_NAME",
+              "samples": []
+            }
+          ]
+        },
+        {
+          "name": "ContactIntent",
+          "samples": [
+            "tell me phone number"
+          ],
+          "slots": []
+        },
+        {
+          "name": "PlayAudio",
+          "slots": [],
+          "samples": [
+            "begin podcast",
+            "begin the podcast",
+            "begin playing the podcast",
+            "start podcast",
+            "start the podcast",
+            "start playing the podcast",
+            "play the podcast",
+            "to play",
+            "to begin podcast",
+            "to begin the podcast",
+            "to begin playing the podcast",
+            "to start podcast",
+            "to start the podcast",
+            "to start playing the podcast",
+            "to play the podcast"
+          ]
+        },
+        {
+          "name": "AMAZON.PauseIntent",
+          "slots": [],
+          "samples": []
+        },
+        {
+          "name": "AMAZON.ResumeIntent",
+          "slots": [],
+          "samples": []
+        },
+        {
+          "name": "AMAZON.PreviousIntent",
+          "slots": [],
+          "samples": []
+        },
+        {
+          "name": "AMAZON.StartOverIntent",
+          "slots": [],
+          "samples": []
+        },
+        {
+          "name": "AMAZON.YesIntent",
+          "slots": [],
+          "samples": []
+        },
+        {
+          "name": "AMAZON.NoIntent",
+          "slots": [],
+          "samples": []
+        },
+        {
+          "name": "AMAZON.NextIntent",
+          "slots": [],
+          "samples": []
+        }
+      ],
+      "types": [
+        {
+          "name": "DEPARTMENT_NAMES",
+          "values": [
+            {
+              "name": {
+                "value": "smart home"
+              }
+            },
+            {
+              "name": {
+                "value": "security"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
