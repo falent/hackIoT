@@ -2,13 +2,32 @@
 const Alexa = require('alexa-sdk');
 const States = require('./states.const');
 const SpeechOutputUtils = require('../utils/speech-output.utils');
-var User = require('../models/user');
+//var User = require('../models/user');
+var AWS = require('aws-sdk');
+
+
+//There are fake AWS data but it works locally.  It is impossible that it works without it!
+
+AWS.config.update({
+    accessKeyId: "AKIAIOSFODNN7EXAMPLE",
+    secretAccessKey: "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY",
+    output: "json",
+    region: "us-west-2",
+    endpoint: "http://dynamo_database:8000"
+});
+
+var docClient = new AWS.DynamoDB.DocumentClient();
+
+
 
 
 
 module.exports = Alexa.CreateStateHandler(States.NAME, {
 
     'NameIntent': function() {
+
+
+        /*
         var myName = this.event.request.intent.slots.firstname.value;
         var userID = this.event.session.user.userId;
         console.log(userID);
@@ -29,6 +48,38 @@ module.exports = Alexa.CreateStateHandler(States.NAME, {
 
            
         this.emit(':tell', SpeechOutputUtils.pickRandom(this.t('WELCOME_OLD_USER', myName)));
+
+        */
+
+
+
+
+        var userName = this.event.request.intent.slots.firstname.value;
+
+
+
+
+        var params = {
+            TableName:"users",
+            Item:{
+                "userID": this.event.session.user.userId,
+                "microtime": new Date().getTime(),
+                "name": userName
+            }
+        };
+
+
+        self =this;
+        console.log("Adding a new item...");
+        docClient.put(params, function(err, data) {
+
+                self.handler.state = StatesConst.NONE;
+
+                self.emit(':ask', "Your name is saved ")
+
+
+
+
     },
 
 
