@@ -13,7 +13,7 @@ AWS.config.update({
     secretAccessKey: "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY",
     output: "json",
     region: "us-west-2",
-    endpoint: "http://dynamo_database:8000"
+    endpoint: "http://localhost:8000"
 });
 
 var docClient = new AWS.DynamoDB.DocumentClient();
