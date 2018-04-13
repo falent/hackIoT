@@ -1,7 +1,7 @@
 // newSession.handlers.js
 
 const SpeechOutputUtils = require('../utils/speech-output.utils');
-var User = require('../models/user');
+//var User = require('../models/user');
 const StatesConst = require('./states.const');
 
 const inNewSessionStartableIntents = [

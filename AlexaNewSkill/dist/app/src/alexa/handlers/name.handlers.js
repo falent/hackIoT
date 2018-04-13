@@ -75,10 +75,12 @@ module.exports = Alexa.CreateStateHandler(States.NAME, {
 
                 self.handler.state = StatesConst.NONE;
 
-                self.emit(':ask', "Your name is saved ")
+                self.emit(':ask', "Your name is saved ");
 
 
 
+
+        )};
 
     },
 

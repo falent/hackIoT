@@ -2,7 +2,7 @@
 const Alexa = require('alexa-sdk');
 const States = require('./states.const');
 const SpeechOutputUtils = require('../utils/speech-output.utils');
-var User = require('../models/user');
+//var User = require('../models/user');
 
 
 
@@ -11,6 +11,9 @@ module.exports = Alexa.CreateStateHandler(States.WEIGHT, {
     'WeightIntent': function() {
 
         var userID = this.event.session.user.userId;
+
+        /*
+
         console.log(userID);
 
 
@@ -31,6 +34,7 @@ module.exports = Alexa.CreateStateHandler(States.WEIGHT, {
         });
 
 
+    */
            
         this.emit(':tell', SpeechOutputUtils.pickRandom(this.t('WELCOME_OLD_USER', myName)));
     },
