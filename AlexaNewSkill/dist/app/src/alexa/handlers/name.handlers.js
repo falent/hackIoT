@@ -77,10 +77,8 @@ module.exports = Alexa.CreateStateHandler(States.NAME, {
 
                 self.emit(':ask', "Your name is saved ");
 
+        });
 
-
-
-        )};
 
     },
 

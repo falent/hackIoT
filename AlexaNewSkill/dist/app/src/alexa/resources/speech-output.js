@@ -3,7 +3,8 @@ module.exports = {
   "en-US": {
       translation: {
           WELCOME: [
-              "Hi, Alexa will say that", "Hello, Alexa will say that but it is something random"
+              "Hi Train Buddy!",
+              "Welcome to My Gym!"
           ],
           REPEAT: [
               "Could you please repeat?"

@@ -2,6 +2,8 @@
 
 module.exports = {
     NONE: '',
+    AGE: '_AGE',
+    HEIGHT: '_HEIGHT',
     DEPARTMENT: '_DEPARTMENT',
 	MUSIC: '_MUSIC',
     NAME: '_NAME',

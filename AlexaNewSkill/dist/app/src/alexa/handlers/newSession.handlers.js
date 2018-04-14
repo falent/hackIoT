@@ -1,6 +1,6 @@
 // newSession.handlers.js
 
-const SpeechOutputUtils = require('../utils/speech-output.utils');
+const speechOutputUtils = require('../utils/speech-output.utils');
 //var User = require('../models/user');
 const StatesConst = require('./states.const');
 
@@ -63,8 +63,6 @@ module.exports = {
 
         /*We are checking a name of our user
 
-         */
-
         var userID = this.event.session.user.userId;
         console.log(userID);
         var self = this;
@@ -72,17 +70,27 @@ module.exports = {
         User.findOne({ userId: userID }, function(err, user) {
             if (err ||!user){
                 self.emit(':ask',
-                    SpeechOutputUtils.pickRandom(self.t('NEW_USER_WELLCOME')));
+                    speechOutputUtils.pickRandom(self.t('NEW_USER_WELLCOME')));
             }
             else {
                 console.log(user);
                 self.emit(':ask',
-                    SpeechOutputUtils.pickRandom(self.t('WELCOME_OLD_USER', user.name))
+                    speechOutputUtils.pickRandom(self.t('WELCOME_OLD_USER', user.name))
                 );
             }
 
         });
+        */
 
+       let reprompt = '';
+       let speechOutput = speechOutputUtils.pickRandom(this.t('WELCOME'));
+
+       reprompt = 'How old are you, honey?';
+       speechOutput += ' ' + reprompt;
+
+       this.handler.state = StatesConst.AGE;
+       this.response.speak(speechOutput).listen(reprompt);
+       this.emit(':responseReady');
     },
 
     // Custom Intents:
@@ -101,23 +109,23 @@ module.exports = {
     // Built-In Intents:
 
     'AMAZON.HelpIntent': function () {
-        this.response.speak(SpeechOutputUtils.pickRandom(this.t('HELP')).listen(this.t('REPEAT')));
+        this.response.speak(speechOutputUtils.pickRandom(this.t('HELP')).listen(this.t('REPEAT')));
         this.emit(':responseReady');
 
     },
 
     'AMAZON.StopIntent': function () {
-        this.response.speak(SpeechOutputUtils.pickRandom(this.t('STOP_ANSWER')));
+        this.response.speak(speechOutputUtils.pickRandom(this.t('STOP_ANSWER')));
         this.emit(':responseReady');
 
     },
 
     'AMAZON.CancelIntent': function () {
-        this.response.speak(SpeechOutputUtils.pickRandom(this.t('CANCEL_ANSWER')));
+        this.response.speak(speechOutputUtils.pickRandom(this.t('CANCEL_ANSWER')));
         this.emit(':responseReady');
     },
     'Unhandled': function () {
-        this.response.speak(SpeechOutputUtils.pickRandom(this.t('UNDEFINED')).listen(this.t('REPEAT')));
+        this.response.speak(speechOutputUtils.pickRandom(this.t('UNDEFINED'))).listen(this.t('REPEAT'));
         this.emit(':responseReady');
 
     }
