@@ -1,45 +1,28 @@
 const Alexa = require('alexa-sdk');
 const States = require('./states.const');
 const SpeechOutputUtils = require('../utils/speech-output.utils');
-const dynamoDbUtils = require('../utils/dynamoDb.utils');
+var calcBmi = require('bmi-calc')
 
-const get = require('lodash.get');
+var AWS = require('aws-sdk');
+AWS.config.update({
+    accessKeyId: "AKIAIOSFODNN7EXAMPLE",
+    secretAccessKey: "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY",
+    output: "json",
+    region: "us-west-2",
+    endpoint: "http://localhost:8000"
+});
+
+var docClient = new AWS.DynamoDB.DocumentClient();
+
 
 
 module.exports = Alexa.CreateStateHandler(States.HEIGHT, {
 
-    'AddHeight': function() {
-        const height = get(this.event, 'request.intent.slots.height.value', null);
-
-        let reprompt = '';
-        let speechOutput = ''
-
-        if (height) {
-            this.attributes.height = height;
-        }
-
-        speechOutput = 'Nice. ';
-        reprompt = 'Now please step on the scale.';
-        speechOutput += ' ' + reprompt;
-        const directiveServiceCall = callDirectiveService(this.event, speechOutput)
-                                        .catch((error) => {
-                                            console.log(Messages.DIRECTIVEERRORMESSAGE + error);
-                                        });
-
-        Promise.all([directiveServiceCall, waitForSteppingOnScaleFake])
-        .then((weight) => {
-            const bmi = calculateBMI(weight, parseInt(this.attributes.height));
-            speechOutput = 'Your BMI is ' + bmi;
-
-            this.handler.state = States.NONE;
-            this.response.speak(speechOutput);
-            this.emit(':responseReady');
-        }).catch((error) => {
-            console.log(error);
-            this.handler.state = States.NONE;
-            this.response.speak('I am sorry. This did not work.');
-            this.emit(':responseReady');
-        });
+    'AddAge': function() {
+        console.log("hey!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        const hight = this.event.request.intent.slots.age.value;
+        this.attributes.howTall = hight;
+        this.emit(':ask',"Your are so tall "+hight+" Go to scale! Do you want to know your weight?");
         
     },
 
@@ -52,6 +35,45 @@ module.exports = Alexa.CreateStateHandler(States.HEIGHT, {
     },
 
     // Built-In Intents:
+
+    'AMAZON.YesIntent': function () {
+
+        var myWeight = 88;
+        var self = this;
+
+        var params = {
+            TableName:"users",
+            Item:{
+                "userID": self.event.session.user.userId,
+                "name": self.attributes.name,
+                "age": self.attributes.age,
+                "tall": self.attributes.howTall,
+                "weight": myWeight
+            },
+            ConditionExpression: '#i = :val',
+            ExpressionAttributeNames: {'#i' : 'name'},
+            ExpressionAttributeValues: {':val' : self.attributes.name}
+        };
+        console.log(params);
+
+        docClient.put(params, function(err, data) {
+
+            if (err) {
+                console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2));
+                self.emit(':ask',"Something went wrong!?");
+
+            } else {
+
+                console.log( calcBmi(myWeight, self.attributes.howTall) );
+                var myValues = calcBmi(myWeight, self.attributes.howTall);
+
+
+                self.emit(':ask',"Your weight is "+myWeight+" Your BMI is "+myValues.value+" it means "+myValues.name);
+            }
+        });
+
+
+    },
 
     'AMAZON.HelpIntent': function () {
         this.handler.state = States.NONE;
@@ -70,64 +92,5 @@ module.exports = Alexa.CreateStateHandler(States.HEIGHT, {
 
 });
 
-function callDirectiveService(event, message) {
-    // Call Alexa Directive Service.
-    const ds = new Alexa.services.DirectiveService();
-    const requestId = event.request.requestId;
-    const endpoint = event.context.System.apiEndpoint;
-	const token = event.context.System.apiAccessToken;
-	const directive = new Alexa.directives.VoicePlayerSpeakDirective(requestId, message);
-    return ds.enqueue(directive, endpoint, token);
-}
-
-/** 
- * Fake version, everytime returning a weight of 91 after 6 seconds!
-*/
-function waitForSteppingOnScaleFake() {
-    let promiseA = new Promise((resolve, reject) => {
-        let wait = setTimeout(() => {
-            clearTimout(wait);
-            const weight = 91;
-            resolve(weight);
-        }, 6000);
-    });
-    return promiseA;
-}
-
-/**
- * Real version, reading from database.
- */
-function waitForSteppingOnScale() {
-    let promiseA = new Promise((resolve, reject) => {
-        getUserWeightFromDatabase.call(this, (err, data) => {
-            if (err) {
-                return reject(error);
-            }
-
-            const weight = data['weight'];
-            resolve(weight);
-        });
-    });
-    return promiseA;
-}
-
-function calculateBMI(weight, height) {
-    console.log('>>>>>> height', height);
-    console.log('>>>>>> weight', weight);
-    let bmi = weight / (height * height);
-    console.log('>>>>>> bom (not rounded)', bmi);
-    bmi = Math.round( bmi * 10) / 10;
-    return bmi;
-}
 
 
-function getUserWeightFromDatabase(callback) {
-    const DYNAMO_TABLE_NAME = 'your-table-name';
-    const PRIMARY_KEY_VALUE = 'fake-id';
-
-    dynamoDbUtils.get(
-        DYNAMO_TABLE_NAME,
-        PRIMARY_KEY_VALUE,
-        callback
-    );
-}

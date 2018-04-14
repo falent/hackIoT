@@ -1,7 +1,7 @@
 {
   "interactionModel": {
     "languageModel": {
-      "invocationName": "myGym",
+      "invocationName": "gym",
       "intents": [
         {
           "name": "AMAZON.CancelIntent",
@@ -17,23 +17,22 @@
         },
         {
           "name": "NameIntent",
-          "samples": [
-            "{name}"
-          ],
           "slots": [
             {
               "name": "name",
-              "type": "AMAZON.US_FIRST_NAME",
-              "samples": []
+              "type": "AMAZON.US_FIRST_NAME"
             }
+          ],
+          "samples": [
+            "{name}"
           ]
         },
         {
           "name": "ContactIntent",
+          "slots": [],
           "samples": [
             "tell me phone number"
-          ],
-          "slots": []
+          ]
         },
         {
           "name": "PlayAudio",
@@ -58,37 +57,30 @@
         },
         {
           "name": "AMAZON.PauseIntent",
-          "slots": [],
           "samples": []
         },
         {
           "name": "AMAZON.ResumeIntent",
-          "slots": [],
           "samples": []
         },
         {
           "name": "AMAZON.PreviousIntent",
-          "slots": [],
           "samples": []
         },
         {
           "name": "AMAZON.StartOverIntent",
-          "slots": [],
           "samples": []
         },
         {
           "name": "AMAZON.YesIntent",
-          "slots": [],
           "samples": []
         },
         {
           "name": "AMAZON.NoIntent",
-          "slots": [],
           "samples": []
         },
         {
           "name": "AMAZON.NextIntent",
-          "slots": [],
           "samples": []
         }
       ],

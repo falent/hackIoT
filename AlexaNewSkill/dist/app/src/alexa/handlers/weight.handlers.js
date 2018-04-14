@@ -36,7 +36,7 @@ module.exports = Alexa.CreateStateHandler(States.WEIGHT, {
 
     */
            
-        this.emit(':tell', SpeechOutputUtils.pickRandom(this.t('WELCOME_OLD_USER', myName)));
+        this.emit(':ask', "Your weight is 80");
     },
 
 

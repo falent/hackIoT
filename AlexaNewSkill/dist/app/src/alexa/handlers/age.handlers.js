@@ -8,23 +8,14 @@ const get = require('lodash.get');
 module.exports = Alexa.CreateStateHandler(States.AGE, {
 
     'AddAge': function() {
-        const age = get(this.event, 'request.intent.slots.age.value', null);
-
-        let reprompt = '';
-        let speechOutput = ''
-
-        if (age) {
-            this.attributes.age = age;
-            speechOutput = 'So you are ' + age + ' years old? But you look like ' + (age - 5) + '.';
-            reprompt = 'Ok, now please tell me. How tall are you? Tell me in centimeters.';
-            speechOutput += ' ' + reprompt;
-        } else {
-            return this.emitWithState('Unhandled');
-        }
-
+        const age = this.event.request.intent.slots.age.value;
         this.handler.state = States.HEIGHT;
-        this.response.speak(speechOutput).listen(reprompt);
-        this.emit(':responseReady');
+        this.attributes.age = age;
+
+
+
+        this.emit(':ask',"Could you please give me your hight "+this.handler.state);
+
     },
 
 

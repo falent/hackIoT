@@ -1,0 +1,66 @@
+{
+  "manifestVersion": "1.0",
+  "permissions": [],
+  "privacyAndCompliance": {
+    "allowsPurchases": false,
+    "isExportCompliant": true,
+    "containsAds": false,
+    "isChildDirected": false,
+    "usesPersonalInfo": false
+  },
+  "manifest": {
+    "publishingInformation": {
+      "locales": {
+        "de-DE": {
+          "summary": "Alexa Skill Hackathon",
+          "examplePhrases": [
+            "Alexa, öffne myGym",
+            "Alexa, start myGym"
+          ],
+          "keywords": [
+            "Opitz"
+          ],
+          "name": "myGym",
+          "description": "Alexa IoT Hackathon"
+        },
+        "en-US": {
+          "summary": "Alexa1 Skill Hackathon",
+          "examplePhrases": [
+            "Alexa, open myGym",
+            "Alexa, start myGym"
+          ],
+          "keywords": [
+            "Fitness Gym"
+          ],
+          "name": "MyGym",
+          "description": "Alexa Hackathon"
+        }
+      },
+      "isAvailableWorldwide": true,
+      "testingInstructions": "Include your testing instruction (if any) here",
+      "category": "KNOWLEDGE_AND_TRIVIA",
+      "distributionCountries": []
+    },
+    "apis": {
+      "custom": {
+        "endpoint": {
+          "uri": "https://your_bespoken_Link_address.io",
+          "sslCertificateType": "Wildcard"
+        },
+        "interfaces": [
+          {
+            "type": "AUDIO_PLAYER"
+          }
+        ]
+      },
+      "regions": {
+        "EU": {
+          "endpoint": {
+            "uri": "https://your_individual_ngrok_address.io",
+            "sslCertificateType": "Wildcard"
+          }
+        }
+      }
+    }
+  }
+}

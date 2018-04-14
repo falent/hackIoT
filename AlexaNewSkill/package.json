@@ -30,7 +30,15 @@
     "alexa-verifier": "^0.3.6"
   },
   "dependencies": {
-    "alexa-sdk": "1.0.25",
-    "lodash.get": "4.4.2"
+    "alexa-sdk": "^1.0.10",
+    "aws-lambda-mock-context": "^3.1.1",
+    "body-parser": "^1.17.2",
+    "botkit": "^0.5.4",
+    "request": "^2.81.0",
+    "bmi-calc": "2.0.0",
+    "express": "4.16.3",
+    "lodash.get": "4.4.2",
+    "aws-sdk": "2.224.1",
+    "update-json-file": "1.1.1"
   }
 }

@@ -82,7 +82,7 @@ const app = express();
     var contents = fs.readFileSync("./../../skill.json");
 
     var jsonContent = JSON.parse(contents);
-    
+
         app.use(bodyParser.json({ type: "application/json" }));
         app.use("/", alexa_adapter.default);
         var port = process.env.PORT || 8001;

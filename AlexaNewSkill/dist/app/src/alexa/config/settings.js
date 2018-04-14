@@ -2,7 +2,7 @@
 
 
 module.exports = {
-    server: '',
+    server: 'https',
     enviroment: 'docker',
     database: 'lokal'
 };

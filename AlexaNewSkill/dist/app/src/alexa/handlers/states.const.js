@@ -7,5 +7,7 @@ module.exports = {
     DEPARTMENT: '_DEPARTMENT',
 	MUSIC: '_MUSIC',
     NAME: '_NAME',
-    WEIGHT: '_WEIGHT'
+    WEIGHT: '_WEIGHT',
+    BELLY:'_BELLY'
+
 };

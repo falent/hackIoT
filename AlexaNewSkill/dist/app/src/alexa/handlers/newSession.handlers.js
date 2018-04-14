@@ -2,7 +2,7 @@
 
 const speechOutputUtils = require('../utils/speech-output.utils');
 //var User = require('../models/user');
-const StatesConst = require('./states.const');
+const States = require('./states.const');
 
 const inNewSessionStartableIntents = [
     'GetWeightIntent'
@@ -39,13 +39,13 @@ module.exports = {
 
             // Podcast/Audio is playing:
             if ((this.event.context.AudioPlayer && this.event.context.AudioPlayer.offsetInMilliseconds > 0) ||
-                (this.event.attributes && this.event.attributes.STATE === StatesConst.MUSIC)) {
+                (this.event.attributes && this.event.attributes.STATE === States.MUSIC)) {
 
                 if (duringAudioAllowedIntents.indexOf(intentName) > -1) {
-                    this.handler.state = StatesConst.MUSIC;
+                    this.handler.state = States.MUSIC;
                     return this.emitWithState(intentName);
                 } else {
-                    this.handler.state = StatesConst.MUSIC;
+                    this.handler.state = States.MUSIC;
                     return this.emitWithState('Unhandled');
                 }
             }
@@ -83,14 +83,20 @@ module.exports = {
         */
 
        let reprompt = '';
-       let speechOutput = speechOutputUtils.pickRandom(this.t('WELCOME'));
+       let speechOutput = "What is your name?"
 
-       reprompt = 'How old are you, honey?';
+       reprompt = 'What is your name?';
        speechOutput += ' ' + reprompt;
 
-       this.handler.state = StatesConst.AGE;
+       this.handler.state = States.NAME;
        this.response.speak(speechOutput).listen(reprompt);
        this.emit(':responseReady');
+
+
+
+
+
+
     },
 
     // Custom Intents:
@@ -102,7 +108,7 @@ module.exports = {
     },
 
     'PlayMusic': function() {
-        this.handler.state = StatesConst.MUSIC;
+        this.handler.state = States.MUSIC;
         this.emitWithState('PlayMusic');
     },
     // Unhandled Intent:
