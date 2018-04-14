@@ -1,0 +1,48 @@
+{% extends "bootstrap/base.html" %}
+{% block title %}Flask-MQTT example{% endblock %}
+
+{% block styles %}
+{{ super() }}
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+  $(document).ready(function() {
+    var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+
+
+      var topic = "/weight";
+      var qos = 2;
+      var data = '{"topic": "' + topic + '", "qos": ' + qos + '}';
+      socket.emit('subscribe', data);
+ 
+
+
+
+      socket.on('mqtt_message_weight', function(data) {
+      console.log(data);
+
+      var text = data['payload'];
+      $('#my_value1').text(JSON.stringify(text));
+      })
+
+
+
+
+  });
+</script>
+{% endblock %}
+
+{% block content %}
+
+
+<label>My weight:</label>
+<div id="my_value"></div>
+
+
+
+{% endblock %}
+
